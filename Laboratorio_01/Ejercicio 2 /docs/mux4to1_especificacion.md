@@ -60,7 +60,8 @@ La salida copia exactamente el valor de la entrada seleccionada.
 
 Representación estructural del módulo:
 
-   
+   <img width="618" height="552" alt="image" src="https://github.com/user-attachments/assets/8c14214f-a41b-450d-aca9-5c54382c9079" />
+
  6. Consideraciones de diseño
 
 - El módulo debe ser completamente combinacional.
