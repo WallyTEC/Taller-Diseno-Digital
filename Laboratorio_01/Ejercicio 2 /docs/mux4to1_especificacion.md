@@ -60,7 +60,8 @@ La salida copia exactamente el valor de la entrada seleccionada.
 
 Representación estructural del módulo:
 
-   <img width="618" height="552" alt="image" src="https://github.com/user-attachments/assets/8c14214f-a41b-450d-aca9-5c54382c9079" />
+   <img width="664" height="542" alt="image" src="https://github.com/user-attachments/assets/da6e4ad0-96a7-4c6e-8761-3bc5565f0ae5" />
+
 
  6. Consideraciones de diseño
 
