@@ -60,18 +60,7 @@ La salida copia exactamente el valor de la entrada seleccionada.
 
 Representación estructural del módulo:
 
-                     ┌─────────────────────────────┐
- d0[WIDTH-1:0] ─────►│                             │
-                     │                             │
- d1[WIDTH-1:0] ─────►│                             │
-                     │        MUX 4 : 1            │────► y[WIDTH-1:0]
- d2[WIDTH-1:0] ─────►│     (Parametrizable)        │
-                     │                             │
- d3[WIDTH-1:0] ─────►│                             │
-                     │                             │
-      sel[1:0] ─────►│       Selector (2 bits)     │
-                     └─────────────────────────────┘
-
+   
  6. Consideraciones de diseño
 
 - El módulo debe ser completamente combinacional.
