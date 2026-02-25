@@ -18,8 +18,8 @@ module mux4to1 #(
     // Entrada 1 del multiplexor.
 
     input  logic [WIDTH-1:0] d2,
-    // Entrada 2 del multiplexor.
-
+    // Entrada 2 del multiplexor. 
+    
     input  logic [WIDTH-1:0] d3,
     // Entrada 3 del multiplexor.
 
