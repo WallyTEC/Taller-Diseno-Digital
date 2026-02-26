@@ -19,8 +19,9 @@ La simulación confirma que el módulo implementa correctamente el complemento a
 ---
 
 ## Captura de simulación
+![simulacion_complemento2](https://github.com/user-attachments/assets/7caca95e-1971-4bca-a972-a839d7730bfc)
 
-![Simulación complemento a 2](simulacion_complemento2.jpeg)
+
 
 ## Conclusión
 
