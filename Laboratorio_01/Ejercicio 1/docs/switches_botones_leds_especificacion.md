@@ -1,4 +1,4 @@
-# Ejercicio 1 – Switches y LEDs
+# Ejercicio 1 – Switches, botones LEDs
 
 ## Descripción
 
