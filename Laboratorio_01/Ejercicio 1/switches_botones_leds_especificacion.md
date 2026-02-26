@@ -16,13 +16,10 @@ Implementar un bloque completamente sintetizable que:
 
 ## Especificaciones técnicas
 
-- Entrada: `sw[3:0]`
-- Salida: `led[3:0]`
+- Entrada: sw[3:0]
+- Salida: led[3:0]
 - Operación:  
   Complemento a 2  
-  \[
-  Y = (\sim X) + 1
-  \]
 
 ## Tipo de diseño
 
