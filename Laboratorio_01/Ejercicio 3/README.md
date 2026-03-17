@@ -47,8 +47,8 @@ Se validaron 5 pruebas independientes sobre todos los valores posibles de entrad
 | 4 | Cambio dinámico 4→12 sin reset | ✅ PASS |
 | 5 | Período medido = 1,000,000 ns | ✅ PASS |
 
-![Resultados barrido 0-15](docs/Resultados.png)
-![Testbench completado](docs/Resultados_2.png)
+![Resultados barrido 0-15](docs/Resultados.jpg)
+![Testbench completado](docs/Resultados2.jpg)
 
 ---
 
