@@ -1,0 +1,19 @@
+; Programa de prueba para ROM del lab 2
+; Realiza una suma simple y guarda el resultado en una direccion ficticia
+;
+; Programa en ensamblador equivalente:
+;   addi x1, x0, 5         ; x1 = 5
+;   addi x2, x0, 10        ; x2 = 10
+;   add  x3, x1, x2        ; x3 = 15
+;   lui  x4, 0x40000       ; x4 = 0x40000000 (zona de RAM)
+;   sw   x3, 0(x4)         ; mem[x4] = 15
+;   jal  x0, 0             ; loop infinito (salta a la misma instruccion)
+
+memory_initialization_radix=16;
+memory_initialization_vector=
+00500093,
+00a00113,
+002081b3,
+40000237,
+00322023,
+0000006f;
