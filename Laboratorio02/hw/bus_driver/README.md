@@ -182,13 +182,17 @@ El testbench `tb_bus_driver.sv` ejecuta **16 casos de prueba** cubriendo:
 
 **Resultado:** 16/16 tests pasados.
 
+<img width="1456" height="623" alt="image" src="https://github.com/user-attachments/assets/aec5178b-a9c4-4153-ac85-90ea242ea9c4" />
+
+
 ### Cómo ejecutar el testbench
 
 1. Abrir el proyecto en Vivado.
-2. Setear `tb_bus_driver` como top de simulación (click derecho → Set as Top).
-3. Flow Navigator → Run Simulation → Run Behavioral Simulation.
-4. En la Tcl Console del simulador: `run all`.
-5. Verificar en la consola: `=== TODOS LOS TESTS PASARON ===`.
+2. No haber generado data_ram.xci.
+3. Setear `tb_bus_driver` como top de simulación (click derecho → Set as Top).
+4. Flow Navigator → Run Simulation → Run Behavioral Simulation.
+5. En la Tcl Console del simulador: `run all`.
+6. Verificar en la consola: `=== TODOS LOS TESTS PASARON ===`.
 
 ---
 
