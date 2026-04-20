@@ -1,0 +1,77 @@
+# =============================================================================
+# .gitignore - Proyecto FPGA con Vivado
+# EL3313 Taller de Diseno Digital - Lab 2
+# =============================================================================
+
+# --- Proyecto Vivado (se regenera con scripts/create_project.tcl) ------------
+build/
+*.xpr
+*.xpr.lock
+*.cache/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+*.srcs/
+*.gen/
+*.str/
+.Xil/
+
+# --- Logs, journals y reportes generados -------------------------------------
+*.log
+*.jou
+*.pb
+*.rpt
+*.dcp
+*.wdb
+*.wcfg
+vivado_*.backup.*
+webtalk*.log
+webtalk*.jou
+hs_err_pid*.log
+
+# --- Bitstream y archivos binarios de programacion ---------------------------
+*.bit
+*.bin
+*.ltx
+*.mcs
+*.prm
+
+# --- IP Cores generados (se regeneran desde ip/*.tcl) ------------------------
+*.xci
+*.xdc.backup
+ip_user_files/
+
+# --- Simulacion / waveforms --------------------------------------------------
+xsim.dir/
+*.vcd
+*.fst
+*.shm/
+
+# --- Software: objetos y binarios generados ----------------------------------
+sw/build/*.o
+sw/build/*.elf
+sw/build/*.map
+# NO ignorar main.coe (se versiona para reproducibilidad):
+!sw/build/main.coe
+
+# --- Python cache ------------------------------------------------------------
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+
+# --- Editores e IDEs ---------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# --- Archivos temporales del SO ----------------------------------------------
+*.bak
+*.tmp
+*.orig
