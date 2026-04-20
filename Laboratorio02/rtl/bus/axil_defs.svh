@@ -1,10 +1,4 @@
-// =============================================================================
-// File        : axil_defs.svh
-// Project     : EL3313 - Taller de Diseno Digital - Lab 2
-// Institution : Tecnologico de Costa Rica
-// Author      : [TU NOMBRE COMPLETO] - Carnet [NUMERO]
-// Date        : 2026-04-20
-// -----------------------------------------------------------------------------
+
 // Description :
 //   Definiciones globales del bus AXI4-Lite del SoC:
 //     * Anchos de datos y direcciones
