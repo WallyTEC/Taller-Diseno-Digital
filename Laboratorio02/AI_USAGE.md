@@ -22,7 +22,6 @@ el docente del curso EL3313.
 ## Herramientas utilizadas
 
 - **Claude (Anthropic)** — modelo Claude Opus 4.7, vía claude.ai.
-- [agregar otras si aplica, p. ej. ChatGPT, GitHub Copilot, Cursor]
 
 ## Registro por archivo
 
