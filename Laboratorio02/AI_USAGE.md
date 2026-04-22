@@ -7,8 +7,7 @@ el docente del curso EL3313.
 ## Políticas seguidas
 
 1. **Toda línea de código generada con IA fue revisada y comprendida por el
-   autor** antes de incorporarla al proyecto. No se incluyó código cuya
-   funcionalidad no se entienda plenamente.
+   autor** antes de incorporarla al proyecto. 
 2. Las **decisiones de arquitectura** (mapa de memoria, selección del core
    `picorv32_axi`, número de slaves AXI-Lite, convención de señales) fueron
    tomadas por el autor.
@@ -117,10 +116,6 @@ Los errores listados arriba refuerzan que el código generado por IA requiere
 revisión crítica antes de usarse: ninguno hubiera sido detectado por la misma
 IA que lo generó sin un testbench o prueba en hardware que lo ejercitara.
 
-## Declaración
 
-El autor asume **responsabilidad completa** por todo el código contenido en
-este repositorio, independientemente de su origen, y declara comprender cada
-línea entregada.
 
-Walter Josué Masís Vindas — 21 de abril de 2026
+Walter Alfaro Ulate — 21 de abril de 2026
