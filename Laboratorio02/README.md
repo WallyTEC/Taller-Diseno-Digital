@@ -3,7 +3,7 @@
 **Curso:** EL3313 Taller de Diseño Digital — I Semestre 2026
 **Institución:** Escuela de Ingeniería Electrónica, Tecnológico de Costa Rica
 **Profesor:** Kaled Alfaro Badilla, M.Sc.
-**Autor(es):** [tu nombre completo] — carnet [número]
+**Autores:** Walter-Allan-Alexander-Esteban
 **Tarjeta FPGA:** Digilent Nexys4 DDR (Artix-7 XC7A100T-1CSG324C)
 **Herramientas:** Xilinx Vivado 2023.2, SystemVerilog, Python 3
 
