@@ -75,3 +75,6 @@ Thumbs.db
 *.bak
 *.tmp
 *.orig
+vivado_pid*.str
+vivado*.jou
+vivado*.log
