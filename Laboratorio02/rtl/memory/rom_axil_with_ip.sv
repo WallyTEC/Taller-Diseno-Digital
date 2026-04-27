@@ -56,8 +56,9 @@ module rom_axil_with_ip (
     logic [ROM_INDEX_W-1:0] rom_addr;
     logic [31:0]            rom_dout;
 
-    rom_program u_rom_ip (
+   rom_program u_rom_ip (
         .clka  (s_axi_aclk),
+        .ena   (1'b1),        // ROM siempre habilitada
         .addra (rom_addr),
         .douta (rom_dout)
     );
