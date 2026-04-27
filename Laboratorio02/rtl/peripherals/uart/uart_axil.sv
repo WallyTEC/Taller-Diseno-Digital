@@ -71,6 +71,7 @@ module uart_axil #(
     ) u_baud (
         .clk_i     (s_axi_aclk),
         .rst_n_i   (s_axi_aresetn),
+        .tx_active_i (tx_busy),
         .tx_tick_o (tx_tick)
     );
 
@@ -167,7 +168,10 @@ module uart_axil #(
             end
             // Solo aceptar RX cuando NO estamos transmitiendo (evita falsos
             // bytes producidos por crosstalk de la línea TX al sincronizador RX).
-            if (rx_byte_valid && !tx_busy) begin
+// Solo aceptar RX cuando NO estamos transmitiendo. Cubrimos toda
+            // la ventana: desde que el SW solicita send hasta que el TX vuelve
+            // a IDLE, incluyendo los ciclos de propagación entre ambos.
+            if (rx_byte_valid && !tx_busy && !reg_ctrl_send_q) begin
                 reg_ctrl_newrx_q <= 1'b1;
             end
         end
@@ -178,11 +182,10 @@ module uart_axil #(
     assign s_axi_bvalid  = (w_state_q == W_RESP);
     assign s_axi_bresp   = AXI_RESP_OKAY;
 
-    always_ff @(posedge s_axi_aclk) begin
-        if (!s_axi_aresetn)                       reg_rx_data_q <= '0;
-        else if (rx_byte_valid && !tx_busy)       reg_rx_data_q <= rx_byte;
+always_ff @(posedge s_axi_aclk) begin
+        if (!s_axi_aresetn)                                          reg_rx_data_q <= '0;
+        else if (rx_byte_valid && !tx_busy && !reg_ctrl_send_q)      reg_rx_data_q <= rx_byte;
     end
-
     // Read path
     typedef enum logic {R_IDLE, R_RESP} r_state_e;
     r_state_e r_state_q, r_state_d;

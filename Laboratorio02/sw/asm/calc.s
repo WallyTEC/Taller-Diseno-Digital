@@ -187,67 +187,120 @@ uart_getc_wait:
     lw      a0, 0(s3)
     andi    a0, a0, 0xFF
     sw      x0, 0(s1)          # limpiar new_rx
-    jalr    x0, 0(ra)
 
+    # Filtrar bytes basura: solo dígitos, +, -, CR, LF
+    li      t0, 0x0D           # CR
+    beq     a0, t0, uart_getc_ok
+    li      t0, 0x0A           # LF
+    beq     a0, t0, uart_getc_ok
+    li      t0, 0x2B           # '+'
+    beq     a0, t0, uart_getc_ok
+    li      t0, 0x2D           # '-'
+    beq     a0, t0, uart_getc_ok
+    li      t0, 0x30           # '0'
+    blt     a0, t0, uart_getc_wait
+    li      t0, 0x39           # '9'
+    bgt     a0, t0, uart_getc_wait
+uart_getc_ok:
+    jalr    x0, 0(ra)
 # =============================================================================
-# print_int: imprime a0 (con signo) en decimal.
-#   Estrategia: convertir a dígitos en buffer en stack, luego emitir invertido.
-#   Modifica: a0, t0..t5, ra (salva ra al stack)
+# print_int: imprime a0 (con signo) en decimal. NO usa el stack.
+#   Usa t6 para guardar ra (evitando el bug del buffer en RAM).
+#   Itera por las potencias de 10 (10000, 1000, 100, 10, 1).
+#   Suprime ceros a la izquierda. Maneja 0 y negativos.
+#   Modifica: a0, t1, t2, t3, t4, t5, t6, ra
 # =============================================================================
 print_int:
-    addi    sp, sp, -16
-    sw      ra, 0(sp)
-    sw      s7, 4(sp)          # contador de dígitos
-    # buffer de hasta 10 dígitos en sp+8 .. sp+15 (cabe 8 bytes; max 5 para 16 bits)
+    mv      t6, ra              # guardar ra del caller en t6 (callee-saved-like)
 
-    mv      t1, a0             # t1 = número (lo iremos consumiendo)
-
-    # Manejar negativo
-    bge     t1, x0, print_int_pos
+    # ---- Manejar negativo ----
+    bge     a0, x0, pi_pos
+    mv      t4, a0
     li      a0, CHAR_NEG
     jal     ra, uart_putc
-    sub     t1, x0, t1         # t1 = -t1
-print_int_pos:
-    # Caso especial: 0
-    bne     t1, x0, print_int_extract
+    sub     a0, x0, t4          # a0 = abs(a0)
+pi_pos:
+
+    # ---- Caso especial: 0 ----
+    bne     a0, x0, pi_nonzero
     li      a0, CHAR_0
     jal     ra, uart_putc
-    j       print_int_done
+    j       pi_return
+pi_nonzero:
 
-print_int_extract:
-    li      s7, 0              # contador de dígitos
-    li      t3, 10
-extract_loop:
-    beq     t1, x0, emit_digits
-    # División por 10 = restas repetidas (RV32I no tiene DIV)
-    li      t4, 0              # cociente
-div10_loop:
-    blt     t1, t3, div10_done
-    sub     t1, t1, t3
-    addi    t4, t4, 1
-    j       div10_loop
-div10_done:
-    # t1 = resto (0..9), t4 = cociente
-    addi    t1, t1, CHAR_0
-    add     t5, sp, s7
-    sb      t1, 8(t5)          # buffer en sp+8+s7
-    addi    s7, s7, 1
-    mv      t1, t4
-    j       extract_loop
+    mv      t4, a0              # t4 = número restante
+    li      t2, 0               # t2 = flag "ya emití un dígito no-cero"
 
-emit_digits:
-    # Emitir desde el último al primero (orden correcto)
-emit_loop:
-    beq     s7, x0, print_int_done
-    addi    s7, s7, -1
-    add     t5, sp, s7
-    lbu     a0, 8(t5)
+    # ---- Decenas de millar (10000) ----
+    li      t1, 10000
+    li      t3, 0
+pi_d10k:
+    blt     t4, t1, pi_d10k_end
+    sub     t4, t4, t1
+    addi    t3, t3, 1
+    j       pi_d10k
+pi_d10k_end:
+    beq     t3, x0, pi_d1k         # si dígito = 0 y flag=0, saltar
+    li      t2, 1
+    addi    a0, t3, CHAR_0
     jal     ra, uart_putc
-    j       emit_loop
 
-print_int_done:
-    lw      ra, 0(sp)
-    lw      s7, 4(sp)
-    addi    sp, sp, 16
+    # ---- Miles (1000) ----
+pi_d1k:
+    li      t1, 1000
+    li      t3, 0
+pi_d1k_loop:
+    blt     t4, t1, pi_d1k_end
+    sub     t4, t4, t1
+    addi    t3, t3, 1
+    j       pi_d1k_loop
+pi_d1k_end:
+    bne     t3, x0, pi_d1k_print
+    beq     t2, x0, pi_d100        # dígito 0 y aún no hubo no-cero -> saltar
+pi_d1k_print:
+    li      t2, 1
+    addi    a0, t3, CHAR_0
+    jal     ra, uart_putc
+
+    # ---- Centenas (100) ----
+pi_d100:
+    li      t1, 100
+    li      t3, 0
+pi_d100_loop:
+    blt     t4, t1, pi_d100_end
+    sub     t4, t4, t1
+    addi    t3, t3, 1
+    j       pi_d100_loop
+pi_d100_end:
+    bne     t3, x0, pi_d100_print
+    beq     t2, x0, pi_d10
+pi_d100_print:
+    li      t2, 1
+    addi    a0, t3, CHAR_0
+    jal     ra, uart_putc
+
+    # ---- Decenas (10) ----
+pi_d10:
+    li      t1, 10
+    li      t3, 0
+pi_d10_loop:
+    blt     t4, t1, pi_d10_end
+    sub     t4, t4, t1
+    addi    t3, t3, 1
+    j       pi_d10_loop
+pi_d10_end:
+    bne     t3, x0, pi_d10_print
+    beq     t2, x0, pi_d1
+pi_d10_print:
+    addi    a0, t3, CHAR_0
+    jal     ra, uart_putc
+
+    # ---- Unidades (siempre se imprime) ----
+pi_d1:
+    addi    a0, t4, CHAR_0
+    jal     ra, uart_putc
+
+pi_return:
+    mv      ra, t6
     jalr    x0, 0(ra)
     
