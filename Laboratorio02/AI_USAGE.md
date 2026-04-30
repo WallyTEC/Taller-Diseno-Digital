@@ -122,4 +122,4 @@ El autor asume **responsabilidad completa** por todo el código contenido en
 este repositorio, independientemente de su origen, y declara comprender cada
 línea entregada.
 
-Walter Josué Masís Vindas — 21 de abril de 2026
+Walter-Alexander-Esteban-Allan 21 de abril de 2026
