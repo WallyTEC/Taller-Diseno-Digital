@@ -1,8 +1,7 @@
 # Registro de asistencia con Inteligencia Artificial
 
 Este documento registra de forma transparente el uso de herramientas de IA
-generativa durante el desarrollo de este proyecto, según lo solicitado por
-el docente del curso EL3313.
+generativa durante el desarrollo de este proyecto
 
 ## Políticas seguidas
 
